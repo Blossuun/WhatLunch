@@ -1,9 +1,28 @@
 import os
 import subprocess
 import sys
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+
+class HealthHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == "/health":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"OK")
+        else:
+            self.send_response(404)
+            self.end_headers()
+
+
+def start_health_server():
+    HTTPServer(("0.0.0.0", 8080), HealthHandler).serve_forever()
 
 
 def main():
+    threading.Thread(target=start_health_server, daemon=True).start()
+
     crawler_name = os.environ.get("CRAWLER_NAME")
     if not crawler_name:
         print("[ERROR] CRAWLER_NAME environment variable not set.", file=sys.stderr)

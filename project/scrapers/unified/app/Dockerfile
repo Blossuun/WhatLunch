@@ -8,6 +8,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 브라우저 설치
 RUN playwright install chromium firefox
 
+# 헬스체크를 위한 curl 설치
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
 # 앱 소스 복사
 COPY run.py ./
 COPY daily_crawler.sh ./
@@ -20,5 +23,7 @@ RUN chmod +x /app/daily_crawler.sh
 # 로그/데이터 디렉토리
 RUN mkdir -p /logs /data /app/base /app/result
 ENV TZ=Asia/Seoul
+
+EXPOSE 8080
 
 ENTRYPOINT ["python", "-u", "run.py"]
