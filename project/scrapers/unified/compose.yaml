@@ -2,6 +2,13 @@ services:
   autoinside:
     image: crawler:latest
     container_name: crawler-autoinside
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
     environment:
       CRAWLER_ID: "autoinside"
       CRAWLER_NAME: "autoinside"
@@ -19,6 +26,13 @@ services:
   autohub:
     image: crawler:latest
     container_name: crawler-autohub
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
     environment:
       CRAWLER_ID: "autohub"
       CRAWLER_NAME: "autohub"
@@ -35,6 +49,13 @@ services:
   onbid_daily:
     image: crawler:latest
     container_name: crawler-onbid-daily
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
     environment:
       CRAWLER_ID: "onbid_daily"
       CRAWLER_NAME: "onbid_daily"
@@ -51,6 +72,13 @@ services:
   automart:
     image: crawler:latest
     container_name: crawler-automart
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
     environment:
       CRAWLER_ID: "automart"
       CRAWLER_NAME: "automart"
